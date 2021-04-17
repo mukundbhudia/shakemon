@@ -19,7 +19,9 @@ const getTranslationFromAPI = async (description) => {
       throw Error('Unable to find translation description from API')
     }
   } catch (error) {
-    console.error(error)
+    console.error(
+      `Error ${error.response.status}: ${error.response.statusText}`
+    )
     return null
   }
 }

@@ -25,7 +25,9 @@ const getPokemonDescriptionFromAPI = async (pokemonName) => {
       throw Error('Unable to find pokemon description from API')
     }
   } catch (error) {
-    console.error(error)
+    console.error(
+      `Error ${error.response.status}: ${error.response.statusText}`
+    )
     return null
   }
 }
