@@ -1,5 +1,5 @@
-const { getPokemonDescriptionFromAPI } = require('./modules/pokemonAPI')
-const { getTranslationFromAPI } = require('./modules/shakespeareTranslatorAPI')
+const { getPokemonDescriptionFromAPI } = require('./services/pokemon')
+const { getTranslationFromAPI } = require('./services/shakespeareTranslator')
 
 const getHome = (req, res) => {
   const now = new Date()
@@ -15,7 +15,6 @@ const getPokemonDescription = async (req, res) => {
     const pokemonDesc = await getPokemonDescriptionFromAPI(name)
     // const description = await getTranslationFromAPI(pokemonDesc)
     const description = pokemonDesc // TODO: test, please remove later
-    console.debug(description)
     res.json({
       name,
       description,
