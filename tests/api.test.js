@@ -29,3 +29,23 @@ describe('Get given pokemon', () => {
     done()
   })
 })
+
+describe('Handle bad pokemon', () => {
+  it(`should return error for no pokemon name`, async (done) => {
+    const res = await request(server).get('/pokemon/')
+    expect(res.body).toHaveProperty('msg')
+    expect(res.body).toHaveProperty('code')
+    expect(res.body.msg).toBe('Error: No pokemon name entered')
+    expect(res.body.code).toBe(400)
+    done()
+  })
+
+  it(`should return error for 'charizards'`, async (done) => {
+    const res = await request(server).get('/pokemon/charizards')
+    expect(res.body).toHaveProperty('msg')
+    expect(res.body).toHaveProperty('code')
+    expect(res.body.msg).toBe('Error: Cannot get Pokemon description from API')
+    expect(res.body.code).toBe(400)
+    done()
+  })
+})
