@@ -30,3 +30,10 @@ To run in containers, follow the options below. Open [http://localhost:8080](htt
 - `docker-compose up` - with docker and docker-compose.
 - `docker-compose --env-file .env -f docker-compose.dev.yml up` - in development mode.
 - `docker-compose --env-file .env -f docker-compose.test.yml up` - runs tests.
+
+## Improvements to consider
+
+- Caching API results particularly as Shakespeare translator's rate limiting is quite restrictive. Perhaps using Redis or even a database to permanently store a pokemon's description and it's subsequent translation as they are encountered from use of this API.
+- Mock API calls in tests.
+- Continuous integration to run tests and apply code formatting. Perhaps using GitHub Actions.
+- Handling the logic in `getPokemonDescription()` for `/src/controllers.js` could be improved by perhaps chaining the responses per API call.
