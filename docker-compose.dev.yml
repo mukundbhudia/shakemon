@@ -6,8 +6,6 @@ services:
     build: .
     volumes:
       - .:/usr/src/app
-    environment:
-      - NODE_ENV=${NODE_ENV}
     ports:
       - 8080:4000
       - 9229:9229

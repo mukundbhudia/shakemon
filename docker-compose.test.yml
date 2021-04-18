@@ -4,6 +4,8 @@ services:
   shakemon:
     image: shakemon
     build: .
+    volumes:
+      - .:/usr/src/app
     ports:
       - 8080:4000
     command: npm test
