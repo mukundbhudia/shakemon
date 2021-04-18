@@ -22,11 +22,10 @@ const getPokemon = (req, res) => {
 
 const getPokemonDescription = async (req, res) => {
   if (req && req.params && req.params.name) {
-    const name = req.params.name
-    const pokemonDesc = await getPokemonDescriptionFromAPI(name)
-    if (pokemonDesc) {
-      const description = pokemonDesc // TODO: test, please remove later
-      // const description = await getTranslationFromAPI(pokemonDesc)
+    const name = req.params.name.trim()
+    const pokemonDescription = await getPokemonDescriptionFromAPI(name)
+    if (pokemonDescription) {
+      const description = await getTranslationFromAPI(pokemonDescription)
       if (description) {
         res.json({
           name,

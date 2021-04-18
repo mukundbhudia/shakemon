@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const removeNonPrintableAsciiChars = (string) => {
-  return string.toString().replace(/[^\x20-\x7E]/g, ' ')
+  return string.replace(/(\r\n|\n|\r)/gm, ' ')
 }
 
 const getPokemonDescriptionFromAPI = async (pokemonName) => {

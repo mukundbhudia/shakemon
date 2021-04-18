@@ -13,8 +13,8 @@ const getTranslationFromAPI = async (description) => {
       response.data.contents &&
       response.data.contents.translated
     ) {
-      let description = response.data.contents.translated
-      return description
+      const description = response.data.contents.translated
+      return description.replace(/\s+/g, ' ') // Remove extra whitespace
     } else {
       throw Error('Unable to find translation description from API')
     }
