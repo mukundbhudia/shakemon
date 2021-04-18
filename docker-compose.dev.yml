@@ -1,0 +1,14 @@
+version: '2.1'
+
+services:
+  shakemon:
+    image: shakemon
+    build: .
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - 8080:4000
+      - 9229:9229
+    command: npm run nm --inspect=0.0.0.0:9229

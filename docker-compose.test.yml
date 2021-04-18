@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+  shakemon:
+    image: shakemon
+    build: .
+    ports:
+      - 8080:4000
+    command: npm test
