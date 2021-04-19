@@ -8,6 +8,10 @@ const sendError = (res, httpCode, message) => {
   })
 }
 
+const notFound = (req, res) => {
+  sendError(res, 404, 'Error: path not found')
+}
+
 const getHome = (req, res) => {
   const now = new Date()
   res.json({
@@ -42,4 +46,4 @@ const getPokemonDescription = async (req, res) => {
   }
 }
 
-module.exports = { getHome, getPokemon, getPokemonDescription }
+module.exports = { getHome, getPokemon, getPokemonDescription, notFound }
