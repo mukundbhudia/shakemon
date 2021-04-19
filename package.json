@@ -2,13 +2,13 @@
   "name": "shakemon",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "engines": {
     "node": "14.x.x",
     "npm": "7.x.x"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "nm": "nodemon npm start",
     "test": "jest"
   },
