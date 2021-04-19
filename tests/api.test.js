@@ -6,12 +6,6 @@ const EXPECTED_CHARIZARD_DESCRIPTION =
 const EXPECTED_MUK_DESCRIPTION =
   'From muk’s corse seeps a foul fluid yond gives off a nose-bendingly horrible stench. Just one drop of this pokémon’s corse fluid can turn a pool stagnant and rancid.'
 
-describe('Sample Test', () => {
-  it('should test that true === true', () => {
-    expect(true).toBe(true)
-  })
-})
-
 describe('Get endpoints', () => {
   it('should return OK status', async (done) => {
     const res = await request(server).get('/')
@@ -57,7 +51,9 @@ describe('Handle bad pokemon', () => {
     const res = await request(server).get('/pokemon/charizards')
     expect(res.body).toHaveProperty('msg')
     expect(res.body).toHaveProperty('code')
-    expect(res.body.msg).toBe('Error: Cannot get Pokemon description from API')
+    expect(res.body.msg).toBe(
+      'Error: Cannot get and/or translate description from API'
+    )
     expect(res.body.code).toBe(400)
     done()
   })
@@ -69,6 +65,18 @@ describe('Handle bad pokemon', () => {
     expect(res.body).toHaveProperty('description')
     expect(res.body.name).toBe('charizard')
     expect(res.body.description).toBe(EXPECTED_CHARIZARD_DESCRIPTION)
+    done()
+  })
+})
+
+describe('Visit bad path', () => {
+  it('should return 404 error for bad path', async (done) => {
+    const res = await request(server).get('/badPath')
+    expect(res.statusCode).toEqual(404)
+    expect(res.body).toHaveProperty('msg')
+    expect(res.body).toHaveProperty('code')
+    expect(res.body.msg).toBe('Error: path not found')
+    expect(res.body.code).toBe(404)
     done()
   })
 })
