@@ -2,7 +2,7 @@ const { getPokemonDescriptionFromAPI } = require('./services/pokemon')
 const { getTranslationFromAPI } = require('./services/shakespeareTranslator')
 
 const sendError = (res, httpCode, message) => {
-  return res.status(httpCode).json({
+  res.status(httpCode).json({
     msg: message,
     code: httpCode,
   })
@@ -24,25 +24,41 @@ const getPokemon = (req, res) => {
   sendError(res, 400, 'Error: No pokemon name entered')
 }
 
-const getPokemonDescription = async (req, res) => {
-  if (req && req.params && req.params.name) {
-    const name = req.params.name.trim()
-    const pokemonDescription = await getPokemonDescriptionFromAPI(name)
-    if (pokemonDescription) {
-      const description = await getTranslationFromAPI(pokemonDescription)
-      if (description) {
-        res.json({
-          name,
-          description,
-        })
-      } else {
-        sendError(res, 400, 'Error: Cannot translate description from API')
-      }
-    } else {
-      sendError(res, 400, 'Error: Cannot get Pokemon description from API')
-    }
-  } else {
+const getPokemonDescription = async (req, res, next) => {
+  if (!req || !req.params || !req.params.name) {
     sendError(res, 400, 'Error: No pokemon name entered')
+    return
+  }
+  const name = req.params.name.trim()
+  let pokemonDescription = null
+  let description = null
+
+  try {
+    pokemonDescription = await getPokemonDescriptionFromAPI(name)
+  } catch (error) {
+    next(error)
+    return
+  }
+
+  try {
+    description =
+      pokemonDescription && (await getTranslationFromAPI(pokemonDescription))
+  } catch (error) {
+    next(error)
+    return
+  }
+
+  if (description) {
+    res.json({
+      name,
+      description,
+    })
+  } else {
+    sendError(
+      res,
+      400,
+      'Error: Cannot get and/or translate description from API'
+    )
   }
 }
 
